@@ -1,7 +1,7 @@
 {
   "name": "@ultimate/ngerrors",
   "version": "0.0.0",
-  "description": "dunno",
+  "description": "A declarative validation module for reactive forms",
   "main": "bundle/ultimate.ngerrors.umd.js",
   "module": "index.js",
   "types": "index.d.ts",
