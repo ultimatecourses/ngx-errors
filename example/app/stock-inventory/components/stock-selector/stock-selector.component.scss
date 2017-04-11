@@ -1,0 +1,51 @@
+.stock-selector {
+  padding: 0 0 20px;
+  margin: 0 0 20px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+
+  &__error {
+    position: absolute;
+    background: #B52D30;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    left: 0;
+    bottom: -10px;
+    line-height: 1;
+    padding: 6px 10px;
+
+    &:before {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 5px 5px 5px;
+      border-color: transparent transparent #B52D30 transparent;
+      content: ' ';
+      display: block;
+      position: absolute;
+      top: -5px;
+      left: 10px;
+    }
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    select {
+      flex: 1 0;
+    }
+    button {
+      flex: 0 0 100px;
+      margin-left: 30px;
+    }
+    stock-counter {
+      flex: 0 0 50px;
+      margin-left: 30px;
+    }
+  }
+}

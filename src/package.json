@@ -1,0 +1,23 @@
+{
+  "name": "@ultimate/ngxerrors",
+  "version": "0.0.0",
+  "description": "A declarative validation module for reactive forms",
+  "main": "bundle/ultimate.ngxerrors.umd.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "author": "Ultimate Angular",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/UltimateAngular/ngxerrors.git",
+    "type": "git"
+  },
+  "peerDependencies": {
+    "@angular/forms": "^2.3.1 || ^5.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.26.0",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-hot-middleware": "^2.24.3"
+  }
+}

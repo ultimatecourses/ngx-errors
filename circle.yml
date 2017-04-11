@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    working_directory: /ngerrors
+
+    docker:
+      - image: ultimateangular/ngerrors-primary:latest
+
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn test
