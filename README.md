@@ -193,4 +193,4 @@ ngErrors also supports FormGroups with control names using dot notation:
 
 # Contributing
 
-Please see the [contributing](#contributing) guidelines.
+Please see the [contributing](CONTRIBUTING.md) guidelines.
