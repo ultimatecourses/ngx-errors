@@ -19,6 +19,7 @@ ngErrors
 <a href="#installation">Installation</a> |
 <a href="#setup">Setup</a> |
 <a href="#documentation">Documentation</a>
+<a href="http://plnkr.co/edit/JS0jSnelnLY9IbzFySfl">Live demo</a>
 </div>
 
 ---
