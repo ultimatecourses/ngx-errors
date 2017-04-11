@@ -1,12 +1,11 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/src
+    working_directory: /ngerrors
 
     docker:
-      - image: selenium/standalone-chrome:3.3.0
+      - image: markadams/chromium-xvfb-js:latest
 
     steps:
-      - checkout
-      - run: yarn install
-      - run: yarn run test
+      - run:
+          command: npm test
