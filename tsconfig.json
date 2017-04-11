@@ -1,0 +1,23 @@
+{
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipTemplateCodegen": true,
+    "skipMetadataEmit": false
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "dist",
+    "removeComments": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "lib": ["dom", "es2015", "es2016"]
+  },
+  "files": [
+    "index.ts"
+  ]
+}

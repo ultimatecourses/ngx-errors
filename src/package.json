@@ -1,0 +1,17 @@
+{
+  "name": "@ultimate/ngerrors",
+  "version": "0.0.0",
+  "description": "dunno",
+  "main": "bundle/ultimate.ngerrors.umd.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "author": "Ultimate Angular",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/UltimateAngular/ngerrors.git",
+    "type": "git"
+  },
+  "peerDependencies": {
+    "@angular/forms": "^2.3.1 || >=4.0.0-beta <5.0.0"
+  }
+}

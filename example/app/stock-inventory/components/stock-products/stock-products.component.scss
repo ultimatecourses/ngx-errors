@@ -1,0 +1,21 @@
+.stock-product {
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    button {
+      flex: 0 0 100px;
+      margin-left: 30px;
+    }
+    stock-counter {
+      flex: 0 0 50px;
+      margin-left: 30px;
+    }
+  }
+
+  &__name {
+    flex: 1 0;
+  }
+}

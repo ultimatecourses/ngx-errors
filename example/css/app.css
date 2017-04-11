@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  font: 300 15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  color: #545e6f;
+}
+
+img {
+  vertical-align: bottom;
+}
+img a {
+  border: 0;
+}
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #9f72e6;
+  text-decoration: none;
+}
+input,
+button {
+  outline: 0;
+}
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password] {
+  border: none;
+  background: #fff;
+  font-size: 13px;
+  padding: 6px 30px 6px 10px;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+}
+label {
+  display: block;
+}
+button {
+  background: #9B5FC6;
+  cursor: pointer;
+  border: 0;
+  border-radius: 3px;
+  padding: 5px 10px;
+  text-align: center;
+  color: #fff;
+}
+button:disabled {
+  cursor: not-allowed;
+  background: #b598e4;
+}
+p {
+  margin: 5px 0;
+}
+
+body {
+  padding: 10px;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0;
+}
+h4 {
+  font-size: 18px;
+  font-weight: 300;
+  margin: 0;
+}
+input[type="text"] {
+  display: block;
+  border: none;
+  background: #fff;
+  font-size: 15px;
+  padding: 6px 30px 6px 10px;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  width: 100%;
+}
+label {
+  margin-bottom: 20px;
+}
+h3 {
+  margin-bottom: 20px;
+}
+app-root {
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+select {
+  -webkit-appearance: none;
+  text-indent: .01px;
+  text-overflow: '';
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 50px 10px 15px;
+  border-radius: 0;
+  color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  outline: none;
+  background:
+    linear-gradient(45deg, transparent 50%, rgba(0, 0, 0, 0.7) 50%)
+    no-repeat calc(100% - 20px) calc(1em + 4px),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.7) 50%, transparent 50%)
+    no-repeat calc(100% - 15px) calc(1em + 4px);
+  background-size: 5px 5px, 5px 5px;
+}
