@@ -1,11 +1,12 @@
 version: 2
 jobs:
   build:
-    working_directory: /ngerrors
+    working_directory: ~/ngerrors
 
     docker:
       - image: markadams/chromium-xvfb-js:latest
 
     steps:
-      - run:
-          command: npm test
+      - checkout
+      - run: npm install
+      - run: npm run test
