@@ -190,3 +190,7 @@ ngErrors also supports FormGroups with control names using dot notation:
 [david-dev-badge-url]: https://david-dm.org/UltimateAngular/ngerrors?type=dev
 [npm-badge]: https://img.shields.io/npm/v/@ultimate/ngerrors.svg
 [npm-badge-url]: https://www.npmjs.com/package/@ultimate/ngerrors
+
+# Contributing
+
+Please see the [contributing](#contributing) guidelines.
