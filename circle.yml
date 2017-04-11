@@ -1,12 +1,12 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/ngerrors
+    working_directory: /ngerrors
 
     docker:
-      - image: markadams/chromium-xvfb-js:latest
+      - image: ultimateangular/ngerrors-primary:latest
 
     steps:
       - checkout
-      - run: npm install
-      - run: npm run test
+      - run: yarn install
+      - run: yarn test
