@@ -41,15 +41,18 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
 
   subscription: Subscription;
 
-  _states = new Subject<string[]>();
+  _states: Subject<string[]>;
   
-  states = this._states.asObservable().distinctUntilChanged();
+  states: Observable<string[]>;
 
   constructor(
     @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
   ) {}
   
   ngOnInit() {
+
+    this._states = new Subject<string[]>();
+    this.states = this._states.asObservable().distinctUntilChanged();
 
     const errors = this.ngxErrors.subject
       .filter(obj => this.errorNames.includes(obj.errorName));
