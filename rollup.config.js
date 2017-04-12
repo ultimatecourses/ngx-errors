@@ -1,9 +1,9 @@
 export default {
   entry: 'dist/index.js',
-  dest: 'dist/bundle/ultimate.ngerrors.umd.js',
+  dest: 'dist/bundle/ultimate.ngxerrors.umd.js',
   format: 'umd',
   exports: 'named',
-  moduleName: 'ngerrors',
+  moduleName: 'ngxerrors',
   globals: {
     'typescript': 'ts'
   }

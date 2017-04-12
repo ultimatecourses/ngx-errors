@@ -8,19 +8,24 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/combineLatest';
 
-import { NgErrorsDirective } from './ngerrors.directive';
+import { NgxErrorsDirective } from './ngxerrors.directive';
 
-import { ErrorOptions } from './ngerrors';
+import { ErrorOptions } from './ngxerrors';
 
 import { toArray } from './utils/toArray';
 
 @Directive({
-  selector: '[ngError]'
+  selector: '[ngError],[ngxError]'
 })
-export class NgErrorDirective implements OnInit, OnDestroy, DoCheck {
+export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
+
+  @Input() set ngxError(value: ErrorOptions) {
+    this.errorNames = toArray(value);
+  }
 
   @Input() set ngError(value: ErrorOptions) {
     this.errorNames = toArray(value);
+    console.warn('Warning: You are using the [ngErrors] directive which has been deprecated and will be removed in the next release. Use [ngxErrors] instead.');
   }
 
   @Input() set when(value: ErrorOptions) {
@@ -41,12 +46,12 @@ export class NgErrorDirective implements OnInit, OnDestroy, DoCheck {
   states = this._states.asObservable().distinctUntilChanged();
 
   constructor(
-    @Inject(forwardRef(() => NgErrorsDirective)) private ngErrors: NgErrorsDirective
+    @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
   ) {}
   
   ngOnInit() {
 
-    const errors = this.ngErrors.subject
+    const errors = this.ngxErrors.subject
       .filter(obj => this.errorNames.includes(obj.errorName));
 
     const states = this.states
@@ -61,7 +66,7 @@ export class NgErrorDirective implements OnInit, OnDestroy, DoCheck {
 
   ngDoCheck() {
     this._states.next(
-      this.rules.filter((rule) => (this.ngErrors.control as any)[rule])
+      this.rules.filter((rule) => (this.ngxErrors.control as any)[rule])
     );
   }
 

@@ -1,4 +1,4 @@
-# Contributing to @ultimate/ngerrors
+# Contributing to @ultimate/ngxerrors
 
 All contributions are greatly appreciated.
 
@@ -10,11 +10,11 @@ When you submit an issue, please keep to the pre-filled template, as it will hel
 
 # Make a change
 
-To setup `@ultimate/ngerrors` for development, run the following -
+To setup `@ultimate/ngxerrors` for development, run the following -
 
 ```bash
-git clone git@github.com:UltimateAngular/ngerrors.git
-cd ngerrors
+git clone git@github.com:UltimateAngular/ngxerrors.git
+cd ngxerrors
 yarn install
 yarn example
 ```
@@ -26,7 +26,7 @@ You'll then need to open up the generated `dist` folder and run `yarn link`.
 Then, inside a different project that's running webpack (for example, our `ng-boilerplate`), run:
  
 ```bash
-yarn link @ultimate/ngerrors
+yarn link @ultimate/ngxerrors
 ```
 
 You'll then be using your local version as the loader.

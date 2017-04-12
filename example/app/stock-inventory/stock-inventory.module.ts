@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { NgErrorsModule } from '../../../src/ngerrors.module';
+import { NgxErrorsModule } from '../../../src/ngxerrors.module';
 
 import { StockInventoryComponent } from './containers/stock-inventory/stock-inventory.component';
 
@@ -28,7 +28,7 @@ import { StockInventoryService } from './services/stock-inventory.service';
     CommonModule,
     ReactiveFormsModule,
     HttpModule,
-    NgErrorsModule
+    NgxErrorsModule
   ],
   exports: [
     StockInventoryComponent

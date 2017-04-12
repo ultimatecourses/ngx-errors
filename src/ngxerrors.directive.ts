@@ -3,15 +3,20 @@ import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { ErrorDetails } from './ngerrors';
+import { ErrorDetails } from './ngxerrors';
 
 @Directive({
-  selector: '[ngErrors]'
+  selector: '[ngErrors],[ngxErrors]'
 })
-export class NgErrorsDirective implements OnInit {
+export class NgxErrorsDirective implements OnInit {
 
-  @Input('ngErrors')
+  @Input('ngxErrors')
   controlName: string;
+
+  @Input('ngErrors') set ngErrors(value) {
+    this.controlName = value;
+    console.warn('Warning: You are using the [ngErrors] directive which has been deprecated and will be removed in the next release. Use [ngxErrors] instead.');
+  }
 
   subject = new BehaviorSubject<ErrorDetails>(null);
 
