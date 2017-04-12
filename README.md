@@ -30,7 +30,7 @@ Why use ngxErrors, how to install and include.
 
 ### What is it?
 
-Form validation made easy for reactive forms. Typically you'd do something like this:
+Form validation error reporting made easy for reactive forms. Typically you'd do something like this:
 
 ```js
 <input type="text" formControlName="foo">
