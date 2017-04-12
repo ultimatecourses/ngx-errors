@@ -137,7 +137,7 @@ It also comes in array format for multiple rules:
 ```html
 <input type="text" formControlName="username">
 <div ngxErrors="username">
-  <div [ngxError]="minlength" [when]="['dirty', 'touched']">
+  <div ngxError="minlength" [when]="['dirty', 'touched']">
     Min length is 5
   </div>
 </div>
