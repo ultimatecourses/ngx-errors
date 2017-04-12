@@ -108,7 +108,7 @@ The `ngxError` directive takes either a `string` or `array` as arguments. The ar
 
 > Note: when using array syntax, `[]` bindings are needed
 
-Using an error, will show the error message when either condition are true:
+Using the array syntax, when any condition in the array is true the error will be shown:
 
 ```html
 <input type="text" formControlName="username">
