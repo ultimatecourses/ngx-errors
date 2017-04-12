@@ -36,7 +36,7 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   hidden: boolean = true;
 
   rules: string[] = [];
-  
+
   errorNames: string[] = [];
 
   subscription: Subscription;
@@ -48,14 +48,14 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   constructor(
     @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
   ) {}
-  
+
   ngOnInit() {
 
     this._states = new Subject<string[]>();
     this.states = this._states.asObservable().distinctUntilChanged();
 
     const errors = this.ngxErrors.subject
-      .filter(obj => this.errorNames.includes(obj.errorName));
+      .filter(obj => obj && this.errorNames.includes(obj.errorName));
 
     const states = this.states
       .map(states => this.rules.every(rule => states.includes(rule)));
