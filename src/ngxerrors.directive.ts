@@ -18,7 +18,7 @@ export class NgxErrorsDirective implements OnInit {
     console.warn('Warning: You are using the [ngErrors] directive which has been deprecated and will be removed in the next release. Use [ngxErrors] instead.');
   }
 
-  subject = new BehaviorSubject<ErrorDetails>(null);
+  subject: BehaviorSubject<ErrorDetails>;
 
   control: AbstractControl;
 
@@ -27,6 +27,7 @@ export class NgxErrorsDirective implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.subject = new BehaviorSubject<ErrorDetails>(null);
     this.control = this.form.control.get(this.controlName);
     this.control.statusChanges.subscribe(this.checkStatus.bind(this));
     this.checkStatus();
