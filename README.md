@@ -47,10 +47,10 @@ With ngxErrors, we've taken a simple declarative approach that cleans up your te
 ```js
 <input type="text" formControlName="foo">
 <div ngxErrors="foo">
-  <div ngError="required" when="touched">
+  <div ngxError="required" when="touched">
     Field is required
   </div>
-  <div ngError="minlength" when="dirty">
+  <div ngxError="minlength" when="dirty">
     Min length is 5
   </div>
 </div>
