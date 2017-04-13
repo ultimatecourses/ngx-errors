@@ -251,6 +251,25 @@ You can optionally pass in conditions in which to activate the error.
 </div>
 ```
 
+You can also use the "catch-all" selector to get the state of your entire control's validity, alongside on an optional state collection.
+
+```html
+<div>
+  <div [ngClass]="{
+    invalid: myError.hasError('*'),
+    invalidTouchedDirty: myError.hasError('*', ['touched', 'dirty'])
+  }">
+  </div>
+  <input type="text" formControlName="username">
+</div>
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="required" [when]="dirty">
+    Field is required
+  </div>
+</div>
+```
+
 #### hasErrors: boolean;
 
 The `hasErrors` property returns `true` if your control has any number of errors. This can be useful for styling elsewhere in your template on a global control level rather than individual errors.
