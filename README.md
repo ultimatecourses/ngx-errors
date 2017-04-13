@@ -196,7 +196,7 @@ ngxErrors exports itself as `ngxErrors`, which means you can access information 
 Basic usage:
 
 ```html
-<div ngxErrors="store.code" #code="ngxErrors"></div>
+<div ngxErrors="username" #myError="ngxErrors"></div>
 ```
 
 #### getError(name: string): any;
