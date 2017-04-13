@@ -30,7 +30,7 @@ Why use ngxErrors, how to install and include.
 
 ### What is it?
 
-Form validation made easy for reactive forms. Typically you'd do something like this:
+Form validation error reporting made easy for reactive forms. Typically you'd do something like this:
 
 ```js
 <input type="text" formControlName="foo">
@@ -108,7 +108,7 @@ The `ngxError` directive takes either a `string` or `array` as arguments. The ar
 
 > Note: when using array syntax, `[]` bindings are needed
 
-Using an error, will show the error message when either condition are true:
+Using the array syntax, when any condition in the array is true the error will be shown:
 
 ```html
 <input type="text" formControlName="username">
@@ -125,8 +125,8 @@ The `when` directive takes either a `string` or `array` as arguments. It allows 
 
 ```html
 <input type="text" formControlName="username">
-<div nxgErrors="username">
-  <div nxgError="minlength" when="dirty">
+<div ngxErrors="username">
+  <div ngxError="minlength" when="dirty">
     Min length is 5
   </div>
 </div>
@@ -136,8 +136,8 @@ It also comes in array format for multiple rules:
 
 ```html
 <input type="text" formControlName="username">
-<div nxgErrors="username">
-  <div [nxgError]="minlength" [when]="['dirty', 'touched']">
+<div ngxErrors="username">
+  <div ngxError="minlength" [when]="['dirty', 'touched']">
     Min length is 5
   </div>
 </div>
@@ -145,12 +145,12 @@ It also comes in array format for multiple rules:
 
 ### Dynamic errors
 
-You can optionally data-bind and dynamically create validation errors with nxgErrors:
+You can optionally data-bind and dynamically create validation errors with ngxErrors:
 
 ```html
 <input type="text" formControlName="username">
-<div nxgErrors="person.username">
-  <div *ngFor="let error of errors" [nxgError]="error.name" [when]="error.rules">
+<div ngxErrors="person.username">
+  <div *ngFor="let error of errors" [ngxError]="error.name" [when]="error.rules">
     {{ error.text }}
   </div>
 </div>
@@ -170,13 +170,13 @@ export class MyComponent {
 
 ### Nested FormGroup support
 
-nxgErrors also supports FormGroups with control names using dot notation:
+ngxErrors also supports FormGroups with control names using dot notation:
 
 ```html
 <div formGroupName="person">
   <input type="text" formControlName="username">
-  <div nxgErrors="person.username">
-    <div nxgError="minlength" [when]="['dirty', 'touched']">
+  <div ngxErrors="person.username">
+    <div ngxError="minlength" [when]="['dirty', 'touched']">
       Min length is 5
     </div>
   </div>
