@@ -217,7 +217,7 @@ The `getError` method returns the object associated with your error. This can be
 
 > The error returned is identical to Angular's FormControl API
 
-#### hasError(name: string): boolean;
+#### hasError(name: string, conditions?: string | string[]): boolean;
 
 The `hasError` method informs you if your control has the given error. This can be useful for styling elsewhere in your template based off the control's error state.
 
@@ -225,6 +225,22 @@ The `hasError` method informs you if your control has the given error. This can 
 
 ```html
 <div [ngClass]="{ required: myError.hasError('required') }">
+  <input type="text" formControlName="username">
+</div>
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="required" [when]="dirty">
+    Field is required
+  </div>
+</div>
+```
+
+You can optionally pass in conditions in which to activate the error.
+
+> Example: Adds `class="required"` when "myError" has the `required` error _and_ the states are `'dirty'` and `'touched'`.
+
+```html
+<div [ngClass]="{ required: myError.hasError('required', ['dirty', 'touched']) }">
   <input type="text" formControlName="username">
 </div>
 
