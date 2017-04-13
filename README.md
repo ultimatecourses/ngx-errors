@@ -7,7 +7,7 @@
 <img width="40" valign="bottom" src="https://angular.io/resources/images/logos/angular/angular.svg">
 ngxErrors
 </h1>
-<h4 align="center">A declarative validation module for reactive forms.</h4>
+<h4 align="center">A declarative validation errors module for reactive forms.</h4>
 
 ---
 
@@ -26,14 +26,18 @@ ngxErrors
 
 # Overview
 
-Why use ngxErrors, how to install and include.
+Why use ngxErrors, how to install and use.
 
 ### What is it?
 
-Form validation error reporting made easy for reactive forms. Typically you'd do something like this:
+Declarative validation error messages for reactive forms.
+
+Typically you'd do something like this:
 
 ```js
+<!-- without ngxErrors -->
 <input type="text" formControlName="foo">
+
 <div *ngIf="form.get('foo').hasError('required') && form.get('foo').touched">
   Field is required
 </div>
@@ -42,10 +46,12 @@ Form validation error reporting made easy for reactive forms. Typically you'd do
 </div>
 ```
 
-With ngxErrors, we've taken a simple declarative approach that cleans up your templates:
+With ngxErrors, we've taken a simple declarative approach that cleans up your templates to make validation easier:
 
 ```js
+<!-- with ngxErrors -->
 <input type="text" formControlName="foo">
+
 <div ngxErrors="foo">
   <div ngxError="required" when="touched">
     Field is required
@@ -182,6 +188,90 @@ ngxErrors also supports FormGroups with control names using dot notation:
   </div>
 </div>
 ```
+
+### Exported Directive API
+
+ngxErrors exports itself as `ngxErrors`, which means you can access information about your control error states elsewhere in your template using a template reference, such as `#foo`.
+
+Basic usage:
+
+```html
+<div ngxErrors="store.code" #code="ngxErrors"></div>
+```
+
+#### getError(name: string): any;
+
+The `getError` method returns the object associated with your error. This can be useful for dynamically displaying error rules.
+
+> Example: Adds `Min length is 5` when value is less than 5 characters (based on `Validators.minLength(5)`).
+
+```html
+<input type="text" formControlName="username">
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="minlength" [when]="dirty">
+    Min length should be {{ myError.getError('minlength')?.requiredLength }}
+  </div>
+</div>
+```
+
+> The error returned is identical to Angular's FormControl API
+
+#### hasError(name: string): boolean;
+
+The `hasError` method informs you if your control has the given error. This can be useful for styling elsewhere in your template based off the control's error state.
+
+> Example: Adds `class="required"` when "myError" has the `required` error.
+
+```html
+<div [ngClass]="{ required: myError.hasError('required') }">
+  <input type="text" formControlName="username">
+</div>
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="minlength" [when]="dirty">
+    Min length is 5
+  </div>
+</div>
+```
+
+#### hasErrors: boolean;
+
+The `hasErrors` property returns `true` if your control has any number of errors. This can be useful for styling elsewhere in your template on a global control level rather than individual errors.
+
+> Example: Adds `class="required"` when "myError" has the `required` error.
+
+```html
+<div [ngClass]="{ hasErrors: myError.hasErrors }">
+  <input type="text" formControlName="username">
+</div>
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="minlength" [when]="dirty">
+    Min length is 5
+  </div>
+</div>
+```
+
+#### errors: { [key: string]: any; };
+
+The `errors` property returns the object associated with any active errors. This can be used to access any error properties on your control.
+
+> Example: Adds `Max length is 10, you typed (n)` when value is more than 10 characters (based on `Validators.maxLength(10)`).
+
+```html
+<input type="text" formControlName="username">
+
+<div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="minlength" [when]="dirty">...</div>
+</div>
+
+<div *ngIf="myError.errors?.maxlength">
+  Max length is 10, you typed {{ myError.errors.maxlength.actualLength }}
+</div>
+```
+
+> The errors returned are identical to Angular's FormControl API
 
 [circle-badge]: https://circleci.com/gh/UltimateAngular/ngxerrors.svg?style=shield
 [circle-badge-url]: https://circleci.com/gh/UltimateAngular/ngxerrors
