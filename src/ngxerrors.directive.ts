@@ -1,15 +1,19 @@
-import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnChanges, AfterViewInit, SimpleChanges } from '@angular/core';
 import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ErrorDetails } from './ngxerrors';
 
+import { ErrorOptions } from './ngxerrors';
+
+import { toArray } from './utils/toArray';
+
 @Directive({
   selector: '[ngxErrors]',
   exportAs: 'ngxErrors'
 })
-export class NgxErrorsDirective implements OnChanges {
+export class NgxErrorsDirective implements OnChanges, AfterViewInit {
 
   @Input('ngxErrors')
   controlName: string;
@@ -32,10 +36,16 @@ export class NgxErrorsDirective implements OnChanges {
   get hasErrors() {
     return !!this.errors;
   }
+
+  checkControlProps(props: ErrorOptions) {
+    return (
+      !props ? true : toArray(props).every((prop: string) => this.control[prop])
+    );
+  }
   
-  hasError(name: string) {
+  hasError(name: string, conditions: ErrorOptions): boolean {
     if (!this.ready) return;
-    return this.control.hasError(name);
+    return this.control.hasError(name) && this.checkControlProps(conditions);
   }
 
   getError(name: string) {

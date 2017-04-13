@@ -23,9 +23,16 @@ import { FormGroup } from '@angular/forms';
             Unknown branch, please check the ID
           </div>
         </div>
+
+        <div>
+          Pristine: {{ store.hasError('required', ['pristine']) }}
+          Dirty: {{ store.hasError('required', ['dirty']) }}
+          Touched: {{ store.hasError('required', ['touched']) }}
+          Touched, Dirty: {{ store.hasError('required', ['touched', 'dirty']) }}
+        </div>
         
         <div>
-          <input [ngStyle]="{ borderColor: store.hasError('required') ? 'red' : 'grey' }" type="text" placeholder="Manager Code" formControlName="code">
+          <input [ngStyle]="{ borderColor: store.hasError('required', ['touched']) ? 'red' : 'grey' }" type="text" placeholder="Manager Code" formControlName="code">
         </div>
 
         <div ngxErrors="store.code" #store="ngxErrors">
