@@ -18,14 +18,14 @@ export class NgxErrorsDirective implements OnChanges {
 
   control: AbstractControl;
 
-  done: boolean = false;
+  ready: boolean = false;
   
   constructor(
     private form: FormGroupDirective
   ) {}
 
   get errors() {
-    if (!this.done) return;
+    if (!this.ready) return;
     return this.control.errors;
   }
 
@@ -34,12 +34,12 @@ export class NgxErrorsDirective implements OnChanges {
   }
   
   hasError(name: string) {
-    if (!this.done) return;
+    if (!this.ready) return;
     return this.control.hasError(name);
   }
 
   getError(name: string) {
-    if (!this.done) return;
+    if (!this.ready) return;
     return this.control.getError(name);
   }
 
@@ -56,7 +56,7 @@ export class NgxErrorsDirective implements OnChanges {
 
   checkStatus() {
     const errors = this.control.errors;
-    this.done = true;
+    this.ready = true;
     if (!errors) return;
     for (const error in errors) {
       this.subject.next({ control: this.control, errorName: error });
