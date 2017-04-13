@@ -8,7 +8,9 @@ import { FormGroup } from '@angular/forms';
     <div [formGroup]="parent">
       <div formGroupName="store">
         
-        <input type="text" placeholder="Branch ID" formControlName="branch">
+        <div>
+          <input type="text" placeholder="Branch ID" formControlName="branch">
+        </div>
 
         <div ngxErrors="store.branch">
           <div class="error" ngxError="required" [when]="['dirty', 'touched']">
@@ -21,14 +23,23 @@ import { FormGroup } from '@angular/forms';
             Unknown branch, please check the ID
           </div>
         </div>
-        
-        <input type="text" placeholder="Manager Code" formControlName="code">
 
-        <div ngxErrors="store.code">
+        <h1>
+          <p>hasErrors: {{ store.hasErrors | json }}</p>
+          <p>errors: {{ store.errors | json }}</p>
+          <p>getError('minlength'): {{ store.getError('minlength') | json }}</p>
+          <p>hasError('required'): {{ store.hasError('required') | json }}</p>
+        </h1>
+        
+        <div>
+          <input [ngStyle]="{ borderColor: store.hasError('required') ? 'red' : 'grey' }" type="text" placeholder="Manager Code" formControlName="code">
+        </div>
+
+        <div ngxErrors="store.code" #store="ngxErrors">
           <div class="error" ngxError="required" [when]="['touched']">
             Manager ID is required
           </div>
-          <div class="error" [ngxError]="['minlength', 'maxlength']" [when]="['dirty', 'touched']">
+          <div class="error" [ngxError]="['minlength', 'maxlength']" [when]="['dirty']">
             Minlength is 2, max length is 5
           </div>
         </div>

@@ -15,17 +15,12 @@ import { ErrorOptions } from './ngxerrors';
 import { toArray } from './utils/toArray';
 
 @Directive({
-  selector: '[ngError],[ngxError]'
+  selector: '[ngxError]'
 })
 export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
 
   @Input() set ngxError(value: ErrorOptions) {
     this.errorNames = toArray(value);
-  }
-
-  @Input() set ngError(value: ErrorOptions) {
-    this.errorNames = toArray(value);
-    console.warn('Warning: You are using the [ngErrors] directive which has been deprecated and will be removed in the next release. Use [ngxErrors] instead.');
   }
 
   @Input() set when(value: ErrorOptions) {
@@ -55,6 +50,7 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
     this.states = this._states.asObservable().distinctUntilChanged();
 
     const errors = this.ngxErrors.subject
+      .filter(Boolean)
       .filter(obj => this.errorNames.includes(obj.errorName));
 
     const states = this.states

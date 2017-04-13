@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit } from '@angular/core';
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -6,35 +6,57 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ErrorDetails } from './ngxerrors';
 
 @Directive({
-  selector: '[ngErrors],[ngxErrors]'
+  selector: '[ngxErrors]',
+  exportAs: 'ngxErrors'
 })
-export class NgxErrorsDirective implements OnInit {
+export class NgxErrorsDirective implements OnChanges {
 
   @Input('ngxErrors')
   controlName: string;
 
-  @Input('ngErrors') set ngErrors(value) {
-    this.controlName = value;
-    console.warn('Warning: You are using the [ngErrors] directive which has been deprecated and will be removed in the next release. Use [ngxErrors] instead.');
-  }
-
-  subject: BehaviorSubject<ErrorDetails>;
+  subject = new BehaviorSubject<ErrorDetails>(null);
 
   control: AbstractControl;
 
+  done: boolean = false;
+  
   constructor(
     private form: FormGroupDirective
   ) {}
 
-  ngOnInit() {
-    this.subject = new BehaviorSubject<ErrorDetails>(null);
-    this.control = this.form.control.get(this.controlName);
-    this.control.statusChanges.subscribe(this.checkStatus.bind(this));
-    this.checkStatus();
+  get errors() {
+    if (!this.done) return;
+    return this.control.errors;
+  }
+
+  get hasErrors() {
+    return !!this.errors;
+  }
+  
+  hasError(name: string) {
+    if (!this.done) return;
+    return this.control.hasError(name);
+  }
+
+  getError(name: string) {
+    if (!this.done) return;
+    return this.control.getError(name);
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.checkStatus();
+      this.control.statusChanges.subscribe(this.checkStatus.bind(this));
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.control = this.form.control.get(changes.controlName.currentValue);
   }
 
   checkStatus() {
     const errors = this.control.errors;
+    this.done = true;
     if (!errors) return;
     for (const error in errors) {
       this.subject.next({ control: this.control, errorName: error });
