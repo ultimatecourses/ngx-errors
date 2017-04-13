@@ -23,13 +23,6 @@ import { FormGroup } from '@angular/forms';
             Unknown branch, please check the ID
           </div>
         </div>
-
-        <h1>
-          <p>hasErrors: {{ store.hasErrors | json }}</p>
-          <p>errors: {{ store.errors | json }}</p>
-          <p>getError('minlength'): {{ store.getError('minlength') | json }}</p>
-          <p>hasError('required'): {{ store.hasError('required') | json }}</p>
-        </h1>
         
         <div>
           <input [ngStyle]="{ borderColor: store.hasError('required') ? 'red' : 'grey' }" type="text" placeholder="Manager Code" formControlName="code">

@@ -229,8 +229,8 @@ The `hasError` method informs you if your control has the given error. This can 
 </div>
 
 <div ngxErrors="username" #myError="ngxErrors">
-  <div ngxError="minlength" [when]="dirty">
-    Min length is 5
+  <div ngxError="required" [when]="dirty">
+    Field is required
   </div>
 </div>
 ```
@@ -239,7 +239,7 @@ The `hasError` method informs you if your control has the given error. This can 
 
 The `hasErrors` property returns `true` if your control has any number of errors. This can be useful for styling elsewhere in your template on a global control level rather than individual errors.
 
-> Example: Adds `class="required"` when "myError" has the `required` error.
+> Example: Adds `class="hasErrors"` when "myError" has any errors.
 
 ```html
 <div [ngClass]="{ hasErrors: myError.hasErrors }">
@@ -247,6 +247,9 @@ The `hasErrors` property returns `true` if your control has any number of errors
 </div>
 
 <div ngxErrors="username" #myError="ngxErrors">
+  <div ngxError="required" [when]="dirty">
+    Field is required
+  </div>
   <div ngxError="minlength" [when]="dirty">
     Min length is 5
   </div>
@@ -264,6 +267,7 @@ The `errors` property returns the object associated with any active errors. This
 
 <div ngxErrors="username" #myError="ngxErrors">
   <div ngxError="minlength" [when]="dirty">...</div>
+  <div ngxError="maxlength" [when]="dirty">...</div>
 </div>
 
 <div *ngIf="myError.errors?.maxlength">
