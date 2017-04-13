@@ -38,9 +38,7 @@ export class NgxErrorsDirective implements OnChanges, AfterViewInit {
   }
 
   checkControlProps(props: ErrorOptions) {
-    return (
-      !props ? true : toArray(props).every((prop: string) => this.control[prop])
-    );
+    return !props ? true : toArray(props).every((prop: string) => this.control[prop]);
   }
   
   hasError(name: string, conditions: ErrorOptions): boolean {
