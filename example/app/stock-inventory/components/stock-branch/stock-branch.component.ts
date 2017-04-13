@@ -24,23 +24,25 @@ import { FormGroup } from '@angular/forms';
           </div>
         </div>
 
-        <div>
-          Pristine: {{ store.hasError('required', ['pristine']) }}
-          Dirty: {{ store.hasError('required', ['dirty']) }}
-          Touched: {{ store.hasError('required', ['touched']) }}
-          Touched, Dirty: {{ store.hasError('required', ['touched', 'dirty']) }}
+        <div *ngIf="myError.hasError('*', ['touched', 'dirty'])">
+          The control is invalid
         </div>
         
-        <div>
-          <input [ngStyle]="{ borderColor: store.hasError('required', ['touched']) ? 'red' : 'grey' }" type="text" placeholder="Manager Code" formControlName="code">
-        </div>
+        <input 
+          type="text" 
+          placeholder="Manager Code" 
+          formControlName="code"
+          [class.required]="myError.hasError('required', ['dirty', 'touched'])">
 
-        <div ngxErrors="store.code" #store="ngxErrors">
-          <div class="error" ngxError="required" [when]="['touched']">
-            Manager ID is required
+        <div ngxErrors="store.code" #myError="ngxErrors">
+          <div class="error" ngxError="required" [when]="['dirty', 'touched']">
+            Field is required
           </div>
-          <div class="error" [ngxError]="['minlength', 'maxlength']" [when]="['dirty']">
-            Minlength is 2, max length is 5
+          <div class="error" ngxError="minlength" [when]="['dirty', 'touched']">
+            Min-length is {{ myError.getError('minlength')?.requiredLength }}
+          </div>
+          <div class="error" ngxError="maxlength" [when]="['dirty', 'touched']">
+            Max-length is {{ myError.getError('maxlength')?.requiredLength }}
           </div>
         </div>
 

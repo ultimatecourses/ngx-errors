@@ -30,6 +30,6 @@ export class StockInventoryService {
   }
 
   checkBranchId(id: string): Observable<boolean> {
-    return Observable.of(false);
+    return Observable.of(true);
   }
 }

@@ -43,7 +43,11 @@ export class NgxErrorsDirective implements OnChanges, AfterViewInit {
   
   hasError(name: string, conditions: ErrorOptions): boolean {
     if (!this.ready) return;
-    return this.control.hasError(name) && this.checkControlProps(conditions);
+    const controlPropsState = this.checkControlProps(conditions);
+    if (name.charAt(0) === '*') {
+      return this.control.invalid && controlPropsState;
+    }
+    return this.control.hasError(name) && controlPropsState;
   }
 
   getError(name: string) {
