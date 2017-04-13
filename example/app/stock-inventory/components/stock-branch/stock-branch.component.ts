@@ -24,8 +24,9 @@ import { FormGroup } from '@angular/forms';
           </div>
         </div>
 
-        <div *ngIf="myError.hasError('*', ['touched', 'dirty'])">
-          The control is invalid
+        <div>
+          Danger: {{ myError.hasError('*', ['touched']) | json }}
+          Success: {{ !myError.hasError('*', ['touched']) | json }}
         </div>
         
         <input 
@@ -35,10 +36,10 @@ import { FormGroup } from '@angular/forms';
           [class.required]="myError.hasError('required', ['dirty', 'touched'])">
 
         <div ngxErrors="store.code" #myError="ngxErrors">
-          <div class="error" ngxError="required" [when]="['dirty', 'touched']">
+          <div class="error" ngxError="required" [when]="['touched']">
             Field is required
           </div>
-          <div class="error" ngxError="minlength" [when]="['dirty', 'touched']">
+          <div class="error" ngxError="minlength" [when]="['touched']">
             Min-length is {{ myError.getError('minlength')?.requiredLength }}
           </div>
           <div class="error" ngxError="maxlength" [when]="['dirty', 'touched']">
