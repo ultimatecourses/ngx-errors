@@ -19,17 +19,7 @@ yarn install
 yarn example
 ```
 
-This will start watching for changes to any source files, and compile/bundle the source.
-
-You'll then need to open up the generated `dist` folder and run `yarn link`.
-
-Then, inside a different project that's running webpack (for example, our `ng-boilerplate`), run:
- 
-```bash
-yarn link @ultimate/ngxerrors
-```
-
-You'll then be using your local version as the loader.
+This will start watching for changes to any source files, and compile/bundle the source. It'll spin up a local web server at http://localhost:3000 where you can test the library against an example form.
 
 ## Committing and adding a PR
 
