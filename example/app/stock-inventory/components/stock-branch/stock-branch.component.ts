@@ -25,15 +25,16 @@ import { FormGroup } from '@angular/forms';
         </div>
 
         <div>
-          Danger: {{ myError.hasError('*', ['touched']) | json }}
-          Success: {{ !myError.hasError('*', ['touched']) | json }}
+          <p>Errors: {{ myError.hasError('*', ['touched']) | json }}</p>
+          <p>No Errors: {{ !myError.hasError('*', ['touched']) | json }}</p>
         </div>
         
         <input 
           type="text" 
           placeholder="Manager Code" 
           formControlName="code"
-          [class.required]="myError.hasError('required', ['dirty', 'touched'])">
+          [class.errors]="myError.hasError('*', ['touched'])"
+          [class.no-errors]="!myError.hasError('*', ['touched'])">
 
         <div ngxErrors="store.code" #myError="ngxErrors">
           <div class="error" ngxError="required" [when]="['touched']">
