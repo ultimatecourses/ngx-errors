@@ -16,13 +16,25 @@ TestBed.initTestEnvironment(
 @Component({
   template: `
     <form [formGroup]="form">      
-      <input formControlName="prop">
-      <div ngxErrors="prop">
-        <div ngxError="required" [when]="dirty">
+      <input 
+        class="prop"
+        formControlName="prop"
+        [ngClass]="{
+          requiredVisibleAtRuntime: prop.hasError('required'),
+          requiredVisibleWhenDirty: prop.hasError('required', ['dirty']),
+          requiredVisibleWhenDirtyTouched: prop.hasError('required', ['dirty', 'touched']),
+          visibleAnyErrorDirtyTouched: prop.hasError('*', ['dirty', 'touched'])
+        }">
+      <div class="errorProps">
+        <div class="errorProp1">{{ prop.errors | json }}</div>
+        <div class="errorProp2">{{ prop.hasErrors | json }}</div>
+      </div>
+      <div ngxErrors="prop" #prop="ngxErrors">
+        <div ngxError="required" when="dirty">
           Required
         </div>
-        <div [ngxError]="['minlength', 'maxlength']" [when]="['dirty', 'touched']">
-          5 characters minimum, 10 characters maximum
+        <div class="errorMinLength" [ngxError]="['minlength', 'maxlength']" [when]="['dirty', 'touched']">
+          {{ prop.getError('minlength')?.requiredLength }} characters minimum, {{ prop.getError('maxlength')?.requiredLength }} characters maximum
         </div>
       </div>
     </form>
@@ -66,31 +78,40 @@ describe('Directives: ngxErrors, ngxError, when', () => {
 
   });
 
-  it('should show ngxError[required] when required is true', async () => {
+  it('should show ngxError[required] when required is true and dirty', async (done) => {
 
     const element = el.queryAll(By.directive(NgxErrorDirective))[0];
 
+    expect(component.form.get('prop').dirty).toBe(false);
     component.form.patchValue({ prop: 'ngxErrors' });
+    component.form.get('prop').markAsDirty();
     fixture.detectChanges();
     await fixture.whenStable();
+    expect(component.form.get('prop').dirty).toBe(true);
     expect(element.nativeElement.hasAttribute('hidden')).toBe(true);
-    expect(component.form.get('prop').hasError('required')).toBe(true);
+    expect(component.form.get('prop').hasError('required')).toBe(false);
 
-    component.form.patchValue({ prop: '' });
+    component.form.patchValue({ prop: null });
     fixture.detectChanges();
     await fixture.whenStable();
     expect(element.nativeElement.hasAttribute('hidden')).toBe(false);
-    expect(component.form.get('prop').hasError('required')).toBe(false);
+    expect(component.form.get('prop').hasError('required')).toBe(true);
+
+    done();
 
   });
 
-  it('should show ngxError[minlength] or ngxError[maxlength] when either are true', async () => {
+  it('should show ngxError[minlength | maxlength] when either are true, touched and dirty', async (done) => {
 
     const element = el.queryAll(By.directive(NgxErrorDirective))[1];
+    expect(component.form.get('prop').dirty).toBe(false);
     expect(component.form.get('prop').touched).toBe(false);
     component.form.patchValue({ prop: 'ngxErrors' });
+    component.form.get('prop').markAsDirty();
+    component.form.get('prop').markAsTouched();
     fixture.detectChanges();
     await fixture.whenStable();
+    expect(component.form.get('prop').dirty).toBe(true);
     expect(component.form.get('prop').touched).toBe(true);
     expect(element.nativeElement.hasAttribute('hidden')).toBe(true);
     expect(component.form.get('prop').hasError('minlength')).toBe(false);
@@ -109,6 +130,68 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     expect(element.nativeElement.hasAttribute('hidden')).toBe(false);
     expect(component.form.get('prop').hasError('minlength')).toBe(false);
     expect(component.form.get('prop').hasError('maxlength')).toBe(true);
+
+    done();
+
+  });
+
+  it('should provide a template ref API via ngxErrors exportAs', async (done) => {
+    await fixture.whenStable();
+
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const element = el.query(By.css('input.prop'));
+    expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(true);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(false);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(false);
+
+    component.form.patchValue({ prop: 'ngxErrors' });
+    component.form.get('prop').markAsDirty();
+    component.form.get('prop').markAsTouched();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(component.form.get('prop').dirty).toBe(true);
+    expect(component.form.get('prop').touched).toBe(true);
+    expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(false);
+    component.form.patchValue({ prop: '' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(true);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(true);
+
+    component.form.patchValue({ prop: 'ngx' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(false);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(false);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(false);
+    expect(element.nativeElement.classList.contains('visibleAnyErrorDirtyTouched')).toBe(true);
+    expect(component.form.get('prop').hasError('required')).toBe(false);
+    expect(component.form.get('prop').hasError('minlength')).toBe(true);
+    expect(component.form.get('prop').hasError('maxlength')).toBe(false);
+    expect(el.query(By.css('.errorMinLength')).nativeElement.textContent).toContain('5 characters minimum');
+
+    component.form.patchValue({ prop: 'ngxErrors!!!!!' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(false);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(false);
+    expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(false);
+    expect(element.nativeElement.classList.contains('visibleAnyErrorDirtyTouched')).toBe(true);
+    expect(component.form.get('prop').hasError('required')).toBe(false);
+    expect(component.form.get('prop').hasError('minlength')).toBe(false);
+    expect(component.form.get('prop').hasError('maxlength')).toBe(true);
+    expect(el.query(By.css('.errorMinLength')).nativeElement.textContent).toContain('10 characters maximum');
+
+    const parse = (name) => JSON.parse(el.query(By.css(name)).nativeElement.textContent);
+    
+    expect(parse('.errorProp1').maxlength.requiredLength).toBe(10);
+    expect(parse('.errorProp1').maxlength.actualLength).toBe(14);
+    expect(parse('.errorProp2')).toBe(true);
+
+    done();
 
   });
 
