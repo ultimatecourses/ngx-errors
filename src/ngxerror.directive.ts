@@ -31,19 +31,19 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   hidden: boolean = true;
 
   rules: string[] = [];
-  
+
   errorNames: string[] = [];
 
   subscription: Subscription;
 
   _states: Subject<string[]>;
-  
+
   states: Observable<string[]>;
 
   constructor(
     @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
-  ) {}
-  
+  ) { }
+
   ngOnInit() {
 
     this._states = new Subject<string[]>();
