@@ -28,6 +28,8 @@ TestBed.initTestEnvironment(
       <div class="errorProps">
         <div class="errorProp1">{{ prop.errors | json }}</div>
         <div class="errorProp2">{{ prop.hasErrors | json }}</div>
+        <div class="errorProp3">{{ prop.isValid('*', ['dirty']) | json }}</div>
+        <div class="errorProp4">{{ prop.isValid('required', ['dirty']) | json }}</div>
       </div>
       <div ngxErrors="prop" #prop="ngxErrors">
         <div ngxError="required" when="dirty">
@@ -136,6 +138,9 @@ describe('Directives: ngxErrors, ngxError, when', () => {
   });
 
   it('should provide a template ref API via ngxErrors exportAs', async (done) => {
+
+    const parse = (name) => JSON.parse(el.query(By.css(name)).nativeElement.textContent);
+
     await fixture.whenStable();
 
     fixture.changeDetectorRef.markForCheck();
@@ -146,6 +151,8 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(true);
     expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(false);
     expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(false);
+    expect(parse('.errorProp3')).toBe(false);
+    expect(parse('.errorProp4')).toBe(false);
 
     component.form.patchValue({ prop: 'ngxErrors' });
     component.form.get('prop').markAsDirty();
@@ -154,12 +161,16 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     await fixture.whenStable();
     expect(component.form.get('prop').dirty).toBe(true);
     expect(component.form.get('prop').touched).toBe(true);
+    expect(parse('.errorProp3')).toBe(true);
+    expect(parse('.errorProp4')).toBe(true);
     expect(element.nativeElement.classList.contains('requiredVisibleAtRuntime')).toBe(false);
     component.form.patchValue({ prop: '' });
     fixture.detectChanges();
     await fixture.whenStable();
     expect(element.nativeElement.classList.contains('requiredVisibleWhenDirty')).toBe(true);
     expect(element.nativeElement.classList.contains('requiredVisibleWhenDirtyTouched')).toBe(true);
+    expect(parse('.errorProp3')).toBe(false);
+    expect(parse('.errorProp4')).toBe(false);
 
     component.form.patchValue({ prop: 'ngx' });
     fixture.detectChanges();
@@ -172,6 +183,8 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     expect(component.form.get('prop').hasError('minlength')).toBe(true);
     expect(component.form.get('prop').hasError('maxlength')).toBe(false);
     expect(el.query(By.css('.errorMinLength')).nativeElement.textContent).toContain('5 characters minimum');
+    expect(parse('.errorProp3')).toBe(false);
+    expect(parse('.errorProp4')).toBe(true);
 
     component.form.patchValue({ prop: 'ngxErrors!!!!!' });
     fixture.detectChanges();
@@ -184,12 +197,12 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     expect(component.form.get('prop').hasError('minlength')).toBe(false);
     expect(component.form.get('prop').hasError('maxlength')).toBe(true);
     expect(el.query(By.css('.errorMinLength')).nativeElement.textContent).toContain('10 characters maximum');
-
-    const parse = (name) => JSON.parse(el.query(By.css(name)).nativeElement.textContent);
     
     expect(parse('.errorProp1').maxlength.requiredLength).toBe(10);
     expect(parse('.errorProp1').maxlength.actualLength).toBe(14);
     expect(parse('.errorProp2')).toBe(true);
+    expect(parse('.errorProp3')).toBe(false);
+    expect(parse('.errorProp4')).toBe(true);
 
     done();
 
