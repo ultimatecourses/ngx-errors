@@ -19,7 +19,7 @@ ngxErrors
 <a href="#installation">Installation</a> |
 <a href="#setup">Setup</a> |
 <a href="#documentation">Documentation</a> |
-<a href="http://plnkr.co/edit/JS0jSnelnLY9IbzFySfl">Live demo</a>
+<a href="http://plnkr.co/edit/JS0jSnelnLY9IbzFySfl?p=preview">Live demo</a>
 </div>
 
 ---
