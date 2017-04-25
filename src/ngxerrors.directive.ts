@@ -3,9 +3,7 @@ import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { ErrorDetails } from './ngxerrors';
-
-import { ErrorOptions } from './ngxerrors';
+import { ErrorDetails, ErrorOptions } from './ngxerrors';
 
 import { toArray } from './utils/toArray';
 
