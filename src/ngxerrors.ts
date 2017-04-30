@@ -1,8 +1,9 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroupDirective } from '@angular/forms';
 
 export type ErrorOptions = string | string[];
 
 export interface ErrorDetails {
-  control: AbstractControl,
+  control?: AbstractControl,
+  form?: FormGroupDirective,
   errorName: string
 }
