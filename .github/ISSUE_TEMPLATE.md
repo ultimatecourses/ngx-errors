@@ -9,5 +9,8 @@
 **What was meant to happen?**
 <!-- What was actually meant to happen? Let us know what you were trying to do in the first place -->
 
+**Steps to reproduce**
+<!-- Include a working link to reproduce the issue -->
+
 **Other information**
 <!-- Please give as much information as you can - if you were using the CLI or node API, what OS/environment, etc, etc -->
