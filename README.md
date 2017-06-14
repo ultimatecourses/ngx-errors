@@ -4,8 +4,8 @@
 [![npm][npm-badge]][npm-badge-url]
 
 <h1 align="center">
-<img width="40" valign="bottom" src="https://angular.io/resources/images/logos/angular/angular.svg">
-ngxErrors
+<img width="40" valign="bottom" src="https://angular.io/assets/images/logos/angular/angular.svg">
+ngx-errors
 </h1>
 <h4 align="center">A declarative validation errors module for reactive forms.</h4>
 
@@ -26,7 +26,7 @@ ngxErrors
 
 # Overview
 
-Why use ngxErrors, how to install and use.
+Why use ngx-errors, how to install and use.
 
 ### What is it?
 
@@ -76,7 +76,7 @@ npm i @ultimate/ngxerrors
 
 ### Setup
 
-Just add ngxErrors to your module:
+Just add ngx-errors to your module:
 
 ```js
 import { NgxErrorsModule } from '@ultimate/ngxerrors';
@@ -191,7 +191,7 @@ ngxErrors also supports FormGroups with control names using dot notation:
 
 ### Exported Directive API
 
-ngxErrors exports itself as `ngxErrors`, which means you can access information about your control error states elsewhere in your template using a template reference, such as `#foo`.
+ngx-errors exports itself as `ngxErrors`, which means you can access information about your control error states elsewhere in your template using a template reference, such as `#foo`.
 
 Basic usage:
 
