@@ -1,4 +1,4 @@
-# Contributing to @ultimate/ngxerrors
+# Contributing to @ultimate/ngx-errors
 
 All contributions are greatly appreciated.
 
@@ -10,11 +10,11 @@ When you submit an issue, please keep to the pre-filled template, as it will hel
 
 # Make a change
 
-To setup `@ultimate/ngxerrors` for development, run the following -
+To setup `@ultimate/ngx-errors` for development, run the following -
 
 ```bash
-git clone git@github.com:UltimateAngular/ngxerrors.git
-cd ngxerrors
+git clone git@github.com:UltimateAngular/ngx-errors.git
+cd ngx-errors
 yarn install
 yarn example
 ```
