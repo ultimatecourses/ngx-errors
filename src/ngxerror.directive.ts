@@ -31,7 +31,7 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   @HostBinding('hidden')
   hidden: boolean = true;
 
-  rules: string[] = toArray(this.ngxErrorsService.getOptions().validators) || [];
+  rules: string[] = toArray(this.ngxErrorsService.getOptions().when) || [];
 
   errorNames: string[] = [];
 

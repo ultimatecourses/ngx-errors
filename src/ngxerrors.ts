@@ -8,5 +8,5 @@ export interface ErrorDetails {
 }
 
 export interface NgxOptions {
-  validators?: ErrorOptions
+  when?: ErrorOptions
 }

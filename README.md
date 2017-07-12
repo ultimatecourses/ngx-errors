@@ -76,7 +76,22 @@ npm i @ultimate/ngxerrors
 
 ### Setup
 
-Just add ngx-errors to your module:
+First add ngx-errors with the `forRoot()` method along with the default options to your app module:
+
+```js
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
+
+@NgModule({ imports: [ 
+      NgxErrorsModule.forRoot({
+        when: ['dirty', 'touched']  //Or whatever your apps default ngxError when parameter would be
+      })
+    ] 
+})
+```
+
+The `forRoot()` default options object will allow you to set a global validation `when` to help keep your html code cleaner.  This can then be overridden per control, if needed. 
+
+Now add ngx-errors to your module:
 
 ```js
 import { NgxErrorsModule } from '@ultimate/ngxerrors';

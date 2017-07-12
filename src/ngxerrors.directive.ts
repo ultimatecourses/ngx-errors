@@ -52,7 +52,7 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
   private checkPropState(prop: string, name: string, conditions: ErrorOptions): boolean {
     if (!this.ready) return;
     const controlPropsState = (
-      (!conditions && !this.ngxErrorsService.getOptions().validators) || toArray(conditions || this.ngxErrorsService.getOptions().validators).every((condition: string) => this.control[condition])
+      (!conditions && !this.ngxErrorsService.getOptions().when) || toArray(conditions || this.ngxErrorsService.getOptions().when).every((condition: string) => this.control[condition])
     );
     if (name.charAt(0) === '*') {
       return this.control[prop] && controlPropsState;
