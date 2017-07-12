@@ -13,6 +13,7 @@ import { NgxErrorsDirective } from './ngxerrors.directive';
 import { ErrorOptions } from './ngxerrors';
 
 import { toArray } from './utils/toArray';
+import { NgxErrorsService } from './ngxerrors.service';
 
 @Directive({
   selector: '[ngxError]'
@@ -30,7 +31,7 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   @HostBinding('hidden')
   hidden: boolean = true;
 
-  rules: string[] = [];
+  rules: string[] = toArray(this.ngxErrorsService.getOptions().validators) || [];
 
   errorNames: string[] = [];
 
@@ -41,7 +42,8 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   states: Observable<string[]>;
 
   constructor(
-    @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
+    @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective,
+    private ngxErrorsService: NgxErrorsService
   ) { }
 
   ngOnInit() {

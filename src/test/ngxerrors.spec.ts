@@ -197,7 +197,7 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     expect(component.form.get('prop').hasError('minlength')).toBe(false);
     expect(component.form.get('prop').hasError('maxlength')).toBe(true);
     expect(el.query(By.css('.errorMinLength')).nativeElement.textContent).toContain('10 characters maximum');
-    
+
     expect(parse('.errorProp1').maxlength.requiredLength).toBe(10);
     expect(parse('.errorProp1').maxlength.actualLength).toBe(14);
     expect(parse('.errorProp2')).toBe(true);

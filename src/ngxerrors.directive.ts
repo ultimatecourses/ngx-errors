@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ErrorDetails, ErrorOptions } from './ngxerrors';
 
 import { toArray } from './utils/toArray';
+import { NgxErrorsService } from './ngxerrors.service';
 
 @Directive({
   selector: '[ngxErrors]',
@@ -22,9 +23,9 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
 
   ready: boolean = false;
 
-  constructor(
-    private form: FormGroupDirective
-  ) { }
+  constructor(private form: FormGroupDirective,
+              private ngxErrorsService: NgxErrorsService) {
+  }
 
   get errors() {
     if (!this.ready) return;
@@ -51,7 +52,7 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
   private checkPropState(prop: string, name: string, conditions: ErrorOptions): boolean {
     if (!this.ready) return;
     const controlPropsState = (
-      !conditions || toArray(conditions).every((condition: string) => this.control[condition])
+      (!conditions && !this.ngxErrorsService.getOptions().validators) || toArray(conditions || this.ngxErrorsService.getOptions().validators).every((condition: string) => this.control[condition])
     );
     if (name.charAt(0) === '*') {
       return this.control[prop] && controlPropsState;
@@ -67,14 +68,14 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
     this.ready = true;
     if (!errors) return;
     for (const errorName in errors) {
-      this.subject.next({ control, errorName });
+      this.subject.next({control, errorName});
     }
   }
 
   ngOnChanges() {
     this.control = this.form.control.get(this.controlName);
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.checkStatus();
