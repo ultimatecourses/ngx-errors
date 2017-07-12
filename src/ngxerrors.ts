@@ -6,3 +6,7 @@ export interface ErrorDetails {
   control: AbstractControl,
   errorName: string
 }
+
+export interface NgxOptions {
+  validators?: ErrorOptions
+}

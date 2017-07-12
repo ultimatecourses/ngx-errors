@@ -59,7 +59,7 @@ describe('Directives: ngxErrors, ngxError, when', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        NgxErrorsModule
+        NgxErrorsModule.forRoot()
       ],
       declarations: [
         AppComponent

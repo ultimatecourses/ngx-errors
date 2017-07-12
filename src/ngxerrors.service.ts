@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ErrorOptions } from './ngxerrors';
+import { NgxOptions } from "./ngxerrors";
 
-
-export interface NgxOptions {
-  validators?: ErrorOptions
-}
 
 @Injectable()
 export class NgxErrorsService {
