@@ -16,7 +16,7 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
   @Input('ngxErrors')
   controlName: string;
 
-  subject = new BehaviorSubject<ErrorDetails>(null);
+  subject: BehaviorSubject<ErrorDetails>;
 
   control: AbstractControl;
 
@@ -71,10 +71,14 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
     }
   }
 
+  ngOnInit() {
+    this.subject = new BehaviorSubject<ErrorDetails>(null);
+  }
+
   ngOnChanges() {
     this.control = this.form.control.get(this.controlName);
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.checkStatus();
@@ -83,7 +87,7 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.subject.unsubscribe();
+    this.subject.complete();
   }
 
 }
