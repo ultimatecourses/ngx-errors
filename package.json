@@ -1,6 +1,6 @@
 {
   "name": "@ultimate/ngxerrors",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A declarative validation module for reactive forms",
   "author": "Ultimate Angular",
   "license": "MIT",
