@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
+import { Directive, Input, OnChanges, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -23,12 +23,16 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
   ready: boolean = false;
 
   constructor(
-    private form: FormGroupDirective
+    public form: FormGroupDirective,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   get errors() {
     if (!this.ready) return;
-    return this.control.errors;
+    if (this.control) {
+      return this.control.errors;
+    }
+    return this.form.errors;
   }
 
   get hasErrors() {
@@ -45,40 +49,68 @@ export class NgxErrorsDirective implements OnChanges, OnDestroy, AfterViewInit {
 
   getError(name: string) {
     if (!this.ready) return;
-    return this.control.getError(name);
+    if (this.control) {
+      return this.control.getError(name);
+    }
+    return this.form.getError(name);
   }
 
   private checkPropState(prop: string, name: string, conditions: ErrorOptions): boolean {
     if (!this.ready) return;
-    const controlPropsState = (
-      !conditions || toArray(conditions).every((condition: string) => this.control[condition])
+    const propsState = (
+      !conditions || toArray(conditions).every(
+        (condition: string) =>
+          this.control ? this.control[condition] : this.form[condition]
+      )
     );
     if (name.charAt(0) === '*') {
-      return this.control[prop] && controlPropsState;
+      if (this.control) {
+        return this.control[prop] && propsState;
+      }
+      return this.form[prop] && propsState;
+    }
+    if (this.control) {
+      return (
+        prop === 'valid' ? !this.control.hasError(name) : this.control.hasError(name) && propsState
+      );
     }
     return (
-      prop === 'valid' ? !this.control.hasError(name) : this.control.hasError(name) && controlPropsState
+      prop === 'valid' ? !this.form.hasError(name) : this.form.hasError(name) && propsState
     );
   }
 
   private checkStatus() {
     const control = this.control;
-    const errors = control.errors;
+    const form = this.form;
+    const errors = control ? control.errors : form.errors;
     this.ready = true;
     if (!errors) return;
     for (const errorName in errors) {
-      this.subject.next({ control, errorName });
+      if (this.control) {
+        this.subject.next({ control, errorName });
+      } else {
+        this.subject.next({ form, errorName });
+
+        // why does this seem necessary? I don't understand
+        this.changeDetectorRef.detectChanges();
+      }
     }
   }
 
   ngOnChanges() {
-    this.control = this.form.control.get(this.controlName);
+    if (this.controlName) {
+      this.control = this.form.control.get(this.controlName);
+    }
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.checkStatus();
-      this.control.statusChanges.subscribe(this.checkStatus.bind(this));
+      if (this.control) {
+        this.control.statusChanges.subscribe(this.checkStatus.bind(this));
+      } else {
+        this.form.statusChanges.subscribe(this.checkStatus.bind(this));
+      }
     });
   }
 

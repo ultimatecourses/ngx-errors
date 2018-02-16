@@ -58,14 +58,23 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
 
     this.subscription = Observable.combineLatest(states, errors)
       .subscribe(([states, errors]) => {
-        this.hidden = !(states && errors.control.hasError(errors.errorName));
+        if (errors.control) {
+          this.hidden = !(states && errors.control.hasError(errors.errorName));
+        } else {
+          this.hidden = !(states && errors.form.hasError(errors.errorName));
+        }
       });
 
   }
 
   ngDoCheck() {
     this._states.next(
-      this.rules.filter((rule) => (this.ngxErrors.control as any)[rule])
+      this.rules.filter((rule) => {
+        if (this.ngxErrors.control) {
+          return (this.ngxErrors.control as any)[rule];
+        }
+        return (this.ngxErrors.form as any)[rule];
+      })
     );
   }
 
