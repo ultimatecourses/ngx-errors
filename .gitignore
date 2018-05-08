@@ -29,3 +29,6 @@ dist
 
 # Docs
 gh-pages
+
+# VScode stop adding .angulardoc.json
+.angulardoc.json

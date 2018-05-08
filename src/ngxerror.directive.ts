@@ -70,6 +70,7 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnDestroy() {
+    this._states.complete();
     this.subscription.unsubscribe();
   }
 
