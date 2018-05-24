@@ -1,16 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const typescript = require('typescript');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const plugins = [
   new webpack.DefinePlugin({
     'process.env': {
-      'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV)
     }
-  }),
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: (module) => module.context && /node_modules/.test(module.context)
   })
 ];
 
@@ -19,36 +15,20 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      beautify: false,
-      mangle: {
-        screw_ie8: true
-      },
-      compress: {
-        unused: true,
-        dead_code: true,
-        drop_debugger: true,
-        conditionals: true,
-        evaluate: true,
-        drop_console: true,
-        sequences: true,
-        booleans: true,
-        screw_ie8: true,
-        warnings: false
-      },
-      comments: false
     })
   );
 } else {
   plugins.push(
     new webpack.NamedModulesPlugin(),
-    new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.resolve(__dirname, './notfound'))
+    new webpack.ContextReplacementPlugin(
+      /@angular(\\|\/)core(\\|\/)fesm5/,
+      path.resolve(__dirname, './notfound')
+    )
   );
 }
 
 module.exports = {
+  mode: 'production',
   cache: true,
   context: __dirname,
   devServer: {
@@ -74,7 +54,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    chunkFilename: '[name]-chunk.js',
+    chunkFilename: '[name].js',
     publicPath: '/build/',
     path: path.resolve(__dirname, 'example/build')
   },
@@ -102,11 +82,43 @@ module.exports = {
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader'
-      },
+      }
     ]
   },
   resolve: {
     extensions: ['.ts', '.js']
+  },
+  stats: {
+    colors: false,
+    hash: true,
+    timings: true,
+    assets: true,
+    chunks: true,
+    chunkModules: true,
+    modules: true,
+    children: true
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          compress: {
+            inline: false
+          }
+        }
+      })
+    ],
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: 'all',
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          enforce: true
+        }
+      }
+    }
   },
   plugins
 };

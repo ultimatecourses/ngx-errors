@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 import { Product, Item } from '../models/product.interface';
 
@@ -13,14 +13,14 @@ export class StockInventoryService {
   ) {}
 
   getCartItems(): Observable<Item[]> {
-    return Observable.of([
+    return of([
       { "product_id": 1, "quantity": 10 },
       { "product_id": 3, "quantity": 50 }
     ]);
   }
 
   getProducts(): Observable<Product[]> {
-    return Observable.of([
+    return of([
       { "id": 1, "price": 2800, "name": "MacBook Pro" },
       { "id": 2, "price": 50, "name": "USB-C Adaptor" },
       { "id": 3, "price": 400, "name": "iPod" },
@@ -30,6 +30,6 @@ export class StockInventoryService {
   }
 
   checkBranchId(id: string): Observable<boolean> {
-    return Observable.of(true);
+    return of(true);
   }
 }
