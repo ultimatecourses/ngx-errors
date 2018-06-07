@@ -4,7 +4,7 @@ jobs:
     working_directory: /ngerrors
 
     docker:
-      - image: ultimateangular/ngerrors-primary:latest
+      - image: anymaniax/ngerrors-primary
 
     steps:
       - checkout

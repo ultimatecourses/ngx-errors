@@ -1,6 +1,6 @@
 FROM markadams/chromium-xvfb-js:latest
 
-ENV YARN_VERSION 0.22.0
+ENV YARN_VERSION 1.7.0
 
 RUN set -ex \
   && for key in \
