@@ -1,12 +1,10 @@
 import { Directive, Input, OnInit, OnDestroy, DoCheck, Inject, HostBinding, forwardRef } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/combineLatest';
+import { Observable, Subject, Subscription, combineLatest } from 'rxjs';
+
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+
+
 
 import { NgxErrorsDirective } from './ngxerrors.directive';
 
@@ -47,17 +45,18 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
   ngOnInit() {
 
     this._states = new Subject<string[]>();
-    this.states = this._states.asObservable().distinctUntilChanged();
+    this.states = this._states.asObservable().pipe(distinctUntilChanged());
 
-    const errors = this.ngxErrors.subject
-      .filter(Boolean)
-      .filter(obj => !!~this.errorNames.indexOf(obj.errorName));
+    const errors = this.ngxErrors.subject.pipe(
+        filter(Boolean),
+        filter(obj => !!~this.errorNames.indexOf(obj.errorName))
+      );
 
-    const states = this.states
-      .map(states => this.rules.every(rule => !!~states.indexOf(rule)));
+    const states = this.states.pipe(
+        map(states => this.rules.every(rule => !!~states.indexOf(rule)))
+      )
 
-    this.subscription = Observable.combineLatest(states, errors)
-      .subscribe(([states, errors]) => {
+    this.subscription = combineLatest(states, errors).subscribe(([states, errors]) => {
         this.hidden = !(states && errors.control.hasError(errors.errorName));
       });
 
