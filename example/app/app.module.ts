@@ -11,7 +11,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    StockInventoryModule
+    StockInventoryModule,
+    
+    
   ],
   bootstrap: [
     AppComponent

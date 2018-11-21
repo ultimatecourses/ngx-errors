@@ -1,8 +1,8 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl } from "@angular/forms";
 
 export type ErrorOptions = string | string[];
 
 export interface ErrorDetails {
-  control: AbstractControl,
-  errorName: string
+  control: AbstractControl;
+  errorName: string;
 }

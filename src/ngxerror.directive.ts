@@ -1,21 +1,18 @@
-import { Directive, Input, OnInit, OnDestroy, DoCheck, Inject, HostBinding, forwardRef } from '@angular/core';
+import { Directive, DoCheck, forwardRef, HostBinding, Inject, Input, OnDestroy, OnInit } from "@angular/core";
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/combineLatest';
+import { combineLatest, Observable, pipe, Subject, Subscription} from "rxjs";
+// import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/map';
+import { distinctUntilChanged ,  filter, map } from "rxjs/operators";
 
-import { NgxErrorsDirective } from './ngxerrors.directive';
+import { NgxErrorsDirective } from "./ngxerrors.directive";
 
-import { ErrorOptions } from './ngxerrors';
+import { ErrorOptions } from "./ngxerrors";
 
-import { toArray } from './utils/toArray';
+import { toArray } from "./utils/toArray";
 
 @Directive({
-  selector: '[ngxError]'
+  selector: "[ngxError]",
 })
 export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
 
@@ -27,49 +24,49 @@ export class NgxErrorDirective implements OnInit, OnDestroy, DoCheck {
     this.rules = toArray(value);
   }
 
-  @HostBinding('hidden')
-  hidden: boolean = true;
+  @HostBinding("hidden")
+  public hidden: boolean = true;
 
-  rules: string[] = [];
+  public rules: string[] = [];
 
-  errorNames: string[] = [];
+  public errorNames: string[] = [];
 
-  subscription: Subscription;
+  public subscription: Subscription;
 
-  _states: Subject<string[]>;
+  public _states: Subject<string[]>;
 
-  states: Observable<string[]>;
+  public states: Observable<string[]>;
 
   constructor(
-    @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective
+    @Inject(forwardRef(() => NgxErrorsDirective)) private ngxErrors: NgxErrorsDirective,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
 
     this._states = new Subject<string[]>();
-    this.states = this._states.asObservable().distinctUntilChanged();
+    this.states = this._states.asObservable().pipe(distinctUntilChanged());
 
     const errors = this.ngxErrors.subject
-      .filter(Boolean)
-      .filter(obj => !!~this.errorNames.indexOf(obj.errorName));
+    .pipe(filter(Boolean))
+      .pipe(filter((obj) => !!~this.errorNames.indexOf(obj.errorName)));
 
-    const states = this.states
-      .map(states => this.rules.every(rule => !!~states.indexOf(rule)));
+    const states = this.states.pipe(
+      map((states) => this.rules.every((rule) => !!~states.indexOf(rule))));
 
-    this.subscription = Observable.combineLatest(states, errors)
+    this.subscription = combineLatest(states, errors)
       .subscribe(([states, errors]) => {
         this.hidden = !(states && errors.control.hasError(errors.errorName));
       });
 
   }
 
-  ngDoCheck() {
+  public ngDoCheck() {
     this._states.next(
-      this.rules.filter((rule) => (this.ngxErrors.control as any)[rule])
+      this.rules.filter((rule) => (this.ngxErrors.control as any)[rule]),
     );
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 

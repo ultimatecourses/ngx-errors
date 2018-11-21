@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { NgxErrorsModule } from '../../../src/ngxerrors.module';
@@ -27,6 +27,7 @@ import { StockInventoryService } from './services/stock-inventory.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpModule,
     NgxErrorsModule
   ],

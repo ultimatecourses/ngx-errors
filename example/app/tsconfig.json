@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "angularCompilerOptions": {
     "genDir": "aot",
     "skipTemplateCodegen": true,
@@ -17,15 +18,5 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "lib": ["dom", "es2015", "es2016"]
-  },
-  "files": [
-    "index.ts"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "useWebpackText": true,
-    "useTranspileModule": true,
-    "doTypeCheck": true,
-    "forkChecker": true
   }
-
 }
