@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '
 
 import { StockValidators } from './stock-inventory.validators';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
 

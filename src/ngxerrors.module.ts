@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
-import { NgxErrorsDirective } from './ngxerrors.directive';
-import { NgxErrorDirective } from './ngxerror.directive';
+import { NgxErrorDirective } from "./ngxerror.directive";
+import { NgxErrorsDirective } from "./ngxerrors.directive";
 
 const dependencies = [
   NgxErrorsDirective,
-  NgxErrorDirective
+  NgxErrorDirective,
 ];
 
 @NgModule({
   declarations: [...dependencies],
-  exports: [...dependencies]
+  exports: [...dependencies],
 })
 export class NgxErrorsModule {}
