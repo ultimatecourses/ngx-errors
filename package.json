@@ -22,8 +22,8 @@
     "test:watch": "karma start"
   },
   "devDependencies": {
-    "@angular/compiler": "4.1.0",
-    "@angular/compiler-cli": "4.1.0",
+    "@angular/compiler": "~8.0.0",
+    "@angular/compiler-cli": "~8.0.0",
     "@types/jasmine": "2.5.46",
     "@types/karma": "0.13.34",
     "@types/node": "^7.0.12",
@@ -51,14 +51,14 @@
     "zone.js": "0.8.9"
   },
   "dependencies": {
-    "@angular/animations": "4.1.0",
-    "@angular/common": "4.1.0",
-    "@angular/core": "4.1.0",
-    "@angular/forms": "4.1.0",
-    "@angular/http": "4.1.0",
-    "@angular/platform-browser": "4.1.0",
-    "@angular/platform-browser-dynamic": "4.1.0",
-    "@angular/router": "4.1.0",
+    "@angular/animations": "~8.0.0",
+    "@angular/common": "~8.0.0",
+    "@angular/core": "~8.0.0",
+    "@angular/forms": "~8.0.0",
+    "@angular/http": "~8.0.0",
+    "@angular/platform-browser": "~8.0.0",
+    "@angular/platform-browser-dynamic": "~8.0.0",
+    "@angular/router": "~8.0.0",
     "core-js": "2.4.1",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.3.0",

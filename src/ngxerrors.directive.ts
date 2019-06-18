@@ -1,7 +1,7 @@
 import { Directive, Input, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroupDirective, AbstractControl } from '@angular/forms';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { ErrorDetails, ErrorOptions } from './ngxerrors';
 

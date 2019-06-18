@@ -1,12 +1,7 @@
 import { Directive, Input, OnInit, OnDestroy, DoCheck, Inject, HostBinding, forwardRef } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/combineLatest';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { filter, map, distinctUntilChanged, combineLatest } from 'rxjs/operators'
 
 import { NgxErrorsDirective } from './ngxerrors.directive';
 
